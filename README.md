@@ -1,3 +1,43 @@
+DECISIONES DE DESARROLLO:
+
+Elegí usar el nil en lugar de los punteros nulos normales porque hace que
+removeFixup() sea más fácil y eficiente.  Cada RedBlackNode instanciado tiene
+todos sus indicadores apuntando a cero.  La raíz en todo momento tendrá su
+puntero principal a cero.
+
+Después de insertar un elemento usando insert(), siempre llamamos a insertFixup()
+para garantizar que se mantengan las propiedades rojo-negro.  Mientras que al eliminar,
+nosotros solo llamamos a deleteFixup cuando una determinada condición 
+(x == NEGRO) sea verdadera.
+
+Como sólo nos interesa eliminar la clave del árbol, comenzaremos
+nuestra función de eliminación (RedBlackNode v) con una llamada a buscar (v.key) que
+asegúrese de que estamos eliminando el nodo correcto.
+
+Este valor se actualiza cuando las funciones insertan y mantienen un nodo
+leftRotateFixup(RedBlackNode) y rightRotateFixup(RedBlackNode) que actualizan
+estas variables cuando ocurre una rotación. Este valor también se actualiza durante el
+eliminación de un nodo mediante la función llamada fixNodeData(RedBlackNode, int).
+
+Mi función size() verifica el tamaño de las variables raíces numLeft y numRight,
+agréguelos y agregue uno para devolver la respuesta.  Esta operación se realiza en
+O(1) tiempo.
+
+En el programa, estoy comprobando el caso en el que un RedBlackNode en particular tiene
+un puntero que apunta a cero, ya que esta operación es muy común, tengo un
+función llamada isNil(RedBlackNode), que devuelve un valor booleano de si
+el argumento es nulo o no.  He elegido que mi función de búsqueda sea
+iterativo cuando fácilmente podría haber sido recursivo porque una búsqueda 
+iterativa siempre es más rápida que una recursiva.
+
+Se considera que los RedBlackNodes duplicados son ligeramente mayores que su
+contraparte con la misma llave.  La función insert() se encarga de esto
+al tener varios casos en su bucle while, uno para < y otro para =>.  
+La función fixNodeData() se encarga de esto durante la eliminación, 
+ya que también tiene dos casos.
+
+---------------------------------------------------------
+
 Los árboles rojo y negro (RBT, por sus siglas en inglés) son un tipo de árbol binario de búsqueda autoequilibrado. Son útiles en la informática para mantener un conjunto de datos ordenados, permitiendo una inserción, eliminación y búsqueda eficientes. Aquí te explico sus características y cómo funcionan:
 Características
 
