@@ -71,7 +71,17 @@ public class RB_Tree<T extends Comparable<T>>{
             return search(node.getRight(), key);
 
     }
-    
+    private void replace_branch(RB_Node<T> u, RB_Node<T> v) {
+        if (u.getFather() == null)
+            root = v;
+        else if (u == u.getFather().getLeft())
+            u.getFather().setLeft(v);
+        else
+            u.getFather().setRight(v);
+        
+        v.setFather(u.getFather());
+    }
+
     private void balance(RB_Node<T> x){
         RB_Node<T> y;
         while (x.getFather().getColor() == RED) {
