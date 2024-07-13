@@ -1,3 +1,103 @@
+```java
+enum NodeColor {
+    RED,
+    BLACK
+}
+
+class RedBlackNode<T extends Comparable<T>> {
+//Atributos:
+    public T _value;
+    public RedBlackNode<T> parent;
+    public RedBlackNode<T> left;
+    public RedBlackNode<T> right;
+    public int numLeft = 0;
+    public int numRight = 0;
+    public NodeColor color;
+
+//Constructores
+    RedBlackNode();
+    RedBlackNode(T value);
+
+}
+
+abstract class IterableTree<T extends  Comparable<T>> {
+    // Metodos Protected
+    protected int charsPerKey();
+    // Metodos Protected Abstractos
+    protected abstract boolean isNil(RedBlackNode<T> n);
+    protected abstract RedBlackNode<T> getRoot();
+    // Metodos Privados
+    private List<T> inOrderKeysHelper(RedBlackNode<T> currentNode);
+    private List<RedBlackNode<T>> inOrderNodeHelper(RedBlackNode<T> currentNode);
+    private List<RedBlackNode<T>> preOrderNodeHelper(RedBlackNode<T> currentNode);
+    private List<T> preOrderKeysHelper(RedBlackNode<T> currentNode);
+    private List<RedBlackNode<T>> postOrderNodesHelper(RedBlackNode<T> currentNode);
+    private List<T> postOrderKeysHelper(RedBlackNode<T> currentNode);
+    // Metodos Publicos
+    public List<T> getInOrderKeys();
+    public List<RedBlackNode<T>> getInOrder();
+    public List<T> getPreOrderKeys();
+    public List<RedBlackNode<T>> getPreOrder();
+    public List<T> getPostOrderKeys();
+    public List<RedBlackNode<T>> getPostOrder();
+}
+
+abstract class AutoBalancedTree<T extends Comparable<T>> extends IterableTree<T> {
+    //Atributos
+    protected final RedBlackNode<T> nil = new RedBlackNode<>();
+    protected RedBlackNode<T> root = nil;
+
+    // Constructores
+    public AutoBalancedTree();
+    
+    // Metodos Protected Abstractos
+    protected abstract void leftRotateFixup(RedBlackNode<T> x);
+    protected abstract void rightRotateFixup(RedBlackNode<T> y);
+    protected abstract void insertFixup(RedBlackNode<T> z);
+    protected abstract void fixNodeData(RedBlackNode<T> x, RedBlackNode<T> y);
+    protected abstract void removeFixup(RedBlackNode<T> x);
+    
+    // Metodos Protected 
+    protected RedBlackNode<T> getRoot();
+    protected void leftRotate(RedBlackNode<T> x);
+    protected void rightRotate(RedBlackNode<T> y);
+    protected int findNumGreater(RedBlackNode<T> node, T key);
+    protected int findNumSmaller(RedBlackNode<T> node, T key);
+    protected boolean isNil(RedBlackNode<T> node);
+    protected void appendNodeToString(RedBlackNode<T> node, StringBuilder builder);
+    
+    // Metodos Publicos
+    public void insert(T value);
+    public RedBlackNode<T> treeMinimum();
+    public RedBlackNode<T> treeMinimum(RedBlackNode<T> node);
+    public RedBlackNode<T> treeSuccessor(RedBlackNode<T> x);
+    public void remove(T v);
+    public RedBlackNode<T> search(T key);
+    public boolean contains(T value);
+    public int numGreater(T key);
+    public int numSmaller(T key);
+    public int size();
+    public String toString();
+    
+    // Metodos Privados
+    private void insert(RedBlackNode<T> z);
+    private void appendNodeToStringRecursive(RedBlackNode<T> node, StringBuilder builder);
+    
+}
+
+class RedBlackTree<T extends Comparable<T>> extends AutoBalancedTree<T> {
+    // Constructor
+    public RedBlackTree();
+    // Metodos del padre Protected
+    protected void leftRotateFixup(RedBlackNode<T> x);
+    protected void rightRotateFixup(RedBlackNode<T> y);
+    protected void insertFixup(RedBlackNode<T> z);
+    protected void fixNodeData(RedBlackNode<T> x, RedBlackNode<T> y);
+    protected void removeFixup(RedBlackNode<T> x);
+    protected void appendNodeToString(RedBlackNode<T> node, StringBuilder builder);
+}
+```
+
 DECISIONES DE DESARROLLO:
 
 Elegí usar el nil en lugar de los punteros nulos normales porque hace que
